@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>         //For system() function
+#include <unistd.h>
+//#include <stdio.h>
 
 using namespace std;
 
@@ -51,6 +53,48 @@ int main(int argc, char **argv)
         fflush(stdin);
         cin>>choice;
         
+        switch(choice)
+        {
+            case '1' :
+            
+                        fseek(fp,0,SEEK_END);
+                        another = 'Y';
+                        while(another == 'Y' || another == 'y')
+                        {
+                            system("clear");
+                            
+                            cout<<"Enter the First Name : ";
+                            cin>>e.firstname;
+                            cout<<"Enter the Last Name  : ";
+                            cin>>e.firstname;
+                            cout<<"Enter the Course     : ";
+                            cin>>e.firstname;
+                            cout<<"Enter the Section    : ";
+                            cin>>e.firstname;
+                            
+                            fwrite(&e,recsize,1,fp);
+                            
+                            cout<<"\nAdd another record(Y/N)? ";
+                            fflush(stdin);
+                            cin>>another;
+                        }
+                        
+                        break;
+            
+            case '5' : 
+            
+                        fclose(fp);
+                        cout<<"\n\n\t\t THANK YOU FOR USING THIS SOFTWARE\n\n";
+                        exit(0);
+            
+            default :
+            
+                        cout<<"\n\n\t\t=== WRONG CHOICE!!! PLEASE TRY AGAIN ===";
+                        sleep(2);
+            
+            
+        }
+        
     }
 	return 0;
 }
@@ -59,7 +103,7 @@ void menu(void)
 {
     system("clear");
         
-    cout<<"\t\t====== STUDENT INFORMATION SYSTEM ======";
+    cout<<"\n\n\n\n\t\t====== STUDENT INFORMATION SYSTEM ======";
     cout<<"\n\n\n\n";
     cout<<"\n\t\t\t1. Add    Records";
     cout<<"\n\t\t\t2. List   Records";
