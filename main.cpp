@@ -1,7 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>         //For system() function
-#include <unistd.h>
+#include <unistd.h>         //For sleep()  function
+//#include <iomanip>          //For setw()   function
 //#include <stdio.h>
 
 using namespace std;
@@ -12,7 +13,6 @@ int main(int argc, char **argv)
 {
 	//printf("hello world\n");
     
-    FILE *fp, *ft;
     char another, choice;
     
     struct student
@@ -25,25 +25,10 @@ int main(int argc, char **argv)
     
     student e;
     
-    char xfirstname[50];
-    char xlastname[50];
+    //char xfirstname[50];
+    //char xlastname[50];
     
-    long int recsize;
-    
-    fp = fopen("user.txt","rb+");
-    
-    if(fp == NULL)
-    {
-        fp = fopen("user.txt","wb+");
-        
-        if(fp == NULL)
-        {
-            puts("Cannot open file");
-            return 0;
-        }
-    }
-    
-    recsize = sizeof(e);
+    fstream file;
     
     while(1)
     {
@@ -57,7 +42,8 @@ int main(int argc, char **argv)
         {
             case '1' :
             
-                        fseek(fp,0,SEEK_END);
+                        file.open("users.dat",ios::app|ios::binary);
+                        
                         another = 'Y';
                         while(another == 'Y' || another == 'y')
                         {
@@ -66,24 +52,52 @@ int main(int argc, char **argv)
                             cout<<"Enter the First Name : ";
                             cin>>e.firstname;
                             cout<<"Enter the Last Name  : ";
-                            cin>>e.firstname;
+                            cin>>e.lastname;
                             cout<<"Enter the Course     : ";
-                            cin>>e.firstname;
+                            cin>>e.course;
                             cout<<"Enter the Section    : ";
-                            cin>>e.firstname;
+                            cin>>e.section;
                             
-                            fwrite(&e,recsize,1,fp);
+                            file.write((char*)&e,sizeof(e));
                             
                             cout<<"\nAdd another record(Y/N)? ";
                             fflush(stdin);
                             cin>>another;
                         }
                         
+                        file.close();
+                        
+                        break;
+                        
+            case '2' :
+            
+                        system("clear");
+                        
+                        cout<<"=== View the records in the Database ===\n";
+                        
+                        //fstream file;
+                        file.open("users.dat",ios::in|ios::binary);
+                        
+                        //rewind(fp);
+                        file.seekg(0);
+                        while(file.read((char*)&e, sizeof(e)))
+                        {
+                            cout<<"\n\n";
+                            cout<<"Name of the Student : "<<e.firstname<<" "<<e.lastname<<"\n";
+                            cout<<"Course              : "<<e.course<<"\n";
+                            cout<<"Section             : "<<e.section;
+                        }
+                        
+                        file.close();
+                        
+                        cout<<"\n\n";
+                        cin.get();
+                        //system("pause");
+                        
                         break;
             
             case '5' : 
             
-                        fclose(fp);
                         cout<<"\n\n\t\t THANK YOU FOR USING THIS SOFTWARE\n\n";
                         exit(0);
             
