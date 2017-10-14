@@ -3,17 +3,11 @@
 #include <stdlib.h>         //For system() function
 #include <unistd.h>         //For sleep()  function
 #include <string.h>         //For strcmp() function
-//#include <iomanip>          //For setw()   function
-//#include <stdio.h>
 
 using namespace std;
 
-void menu(void);
-
 int main(int argc, char **argv)
 {
-	//printf("hello world\n");
-    
     char another, choice;
     
     struct student
@@ -22,18 +16,22 @@ int main(int argc, char **argv)
         char lastname[50];
         char course[100];
         int section;
-    };
-    
-    student e;
-    
-    //char xfirstname[50];
-    //char xlastname[50];
+    }e;
     
     fstream file;
     
     while(1)
     {
-        menu();
+        system("clear");
+        
+        cout<<"\n\n\n\n\t\t====== STUDENT DATABASE MANAGEMENT SYSTEM ======";
+        cout<<"\n\n\n\n";
+        cout<<"\n\t\t\t1. Add    Records";
+        cout<<"\n\t\t\t2. List   Records";
+        cout<<"\n\t\t\t3. Modify Records";
+        cout<<"\n\t\t\t4. Delete Records";
+        cout<<"\n\t\t\t5. Exit   Program";
+        cout<<"\n\n";
         
         cout<<"\t\t\t Select your choice :=> ";        
         fflush(stdin);
@@ -76,17 +74,19 @@ int main(int argc, char **argv)
                         
                         cout<<"=== View the records in the Database ===\n";
                         
-                        //fstream file;
                         file.open("users.dat",ios::in|ios::binary);
-                        
-                        //rewind(fp);
                         file.seekg(0);
+                        
+                        
+                        cout<<"\n\n";
+                        cout<<"NAME";
+                        cout<<"\t\t\t\t\tCOURSE";
+                        cout<<"\t\tSection\n\n";
                         while(file.read((char*)&e, sizeof(e)))
                         {
-                            cout<<"\n\n";
-                            cout<<"Name of the Student : "<<e.firstname<<" "<<e.lastname<<"\n";
-                            cout<<"Course              : "<<e.course<<"\n";
-                            cout<<"Section             : "<<e.section;
+                            cout<<e.firstname<<" "<<e.lastname;
+                            cout<<"\t\t\t\t"<<e.course;
+                            cout<<"\t\t"<<e.section<<"\n";
                         }
                         
                         file.close();
@@ -159,6 +159,43 @@ int main(int argc, char **argv)
             
                         system("clear");
                         
+                        file.open("users.dat",ios::in|ios::out|ios::binary);
+                        file.seekg(0);
+                        
+                        another = 'Y';
+                        
+                        while(another == 'Y' || another == 'y')
+                        {
+                            char xfirstname[50];
+                            int flag = 0;
+                            cout<<"Enter the first name of student : ";
+                            cin>>xfirstname;
+                            
+                            file.seekg(0);
+                            
+                            fstream temp;
+                            temp.open("temp.dat",ios::out|ios::binary);
+                            
+                            while(file.read((char*)&e,sizeof(e)))
+                            {
+                                if(strcmp(e.firstname,xfirstname) != 0)
+                                {
+                                    temp.write((char*)&e,sizeof(e));
+                                }
+                            }
+                            
+                            file.close();
+                            temp.close();
+                            
+                            remove("users.dat");
+                            rename("temp.dat","users.dat");
+                            
+                            cout<<"\nDelete another record(Y/N)? ";
+                            fflush(stdin);
+                            cin>>another;
+                        }
+                        
+                        break;
             
             case '5' : 
             
@@ -175,18 +212,4 @@ int main(int argc, char **argv)
         
     }
 	return 0;
-}
-
-void menu(void)
-{
-    system("clear");
-        
-    cout<<"\n\n\n\n\t\t====== STUDENT INFORMATION SYSTEM ======";
-    cout<<"\n\n\n\n";
-    cout<<"\n\t\t\t1. Add    Records";
-    cout<<"\n\t\t\t2. List   Records";
-    cout<<"\n\t\t\t3. Modify Records";
-    cout<<"\n\t\t\t4. Delete Records";
-    cout<<"\n\t\t\t5. Exit   Program";
-    cout<<"\n\n";
 }
