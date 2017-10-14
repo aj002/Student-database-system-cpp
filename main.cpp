@@ -2,6 +2,7 @@
 #include <fstream>
 #include <stdlib.h>         //For system() function
 #include <unistd.h>         //For sleep()  function
+#include <string.h>         //For strcmp() function
 //#include <iomanip>          //For setw()   function
 //#include <stdio.h>
 
@@ -91,10 +92,73 @@ int main(int argc, char **argv)
                         file.close();
                         
                         cout<<"\n\n";
-                        cin.get();
+                        
+                        /*std::cout << "Press \'Return\' to end." << std::endl;
+                        fflush(stdin);
+                        char ch;
+                        std::cin.get(ch);*/
+                        
                         //system("pause");
                         
                         break;
+                        
+            case '3' :
+            
+                        system("clear");
+                        
+                        file.open("users.dat",ios::in|ios::out|ios::binary);
+                        file.seekg(0);
+                        
+                        another = 'Y';
+                        
+                        while(another == 'Y' || another == 'y')
+                        {
+                            char xfirstname[50];
+                            int flag = 0;
+                            cout<<"Enter the first name of student : ";
+                            cin>>xfirstname;
+                            
+                            file.seekg(0);
+                            
+                            while(file.read((char*)&e,sizeof(e)))
+                            {
+                                if(!strcmp(e.firstname,xfirstname))
+                                {
+                                    cout<<"Enter the First Name : ";
+                                    cin>>e.firstname;
+                                    cout<<"Enter the Last Name  : ";
+                                    cin>>e.lastname;
+                                    cout<<"Enter the Course     : ";
+                                    cin>>e.course;
+                                    cout<<"Enter the Section    : ";
+                                    cin>>e.section;
+                                    
+                                    file.seekg(-1*sizeof(e),ios::cur);
+                                    file.write((char*)&e,sizeof(e));
+                                    
+                                    flag = 1;
+                                    break;
+                                }
+                            }
+                            
+                            if(flag == 0)
+                            {
+                                cout<<"Record Not Found";
+                            }
+                            
+                            cout<<"Modify another record(Y/N)? ";
+                            fflush(stdin);
+                            cin>>another;
+                        }
+                        
+                        file.close();
+                        
+                        break;
+                        
+            case '4' :
+            
+                        system("clear");
+                        
             
             case '5' : 
             
