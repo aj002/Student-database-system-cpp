@@ -1,15 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>         //For system() function
-#include <unistd.h>         //For sleep()  function
 #include <string.h>         //For strcmp() function
 
 using namespace std;
 
 int main(int argc, char **argv)
 {
-    char another, choice;
-    
     struct student
     {
         char firstname[50];
@@ -23,6 +20,8 @@ int main(int argc, char **argv)
     while(1)
     {
         system("clear");
+        
+        char another, choice;
         
         cout<<"\n\n\n\n\t\t====== STUDENT DATABASE MANAGEMENT SYSTEM ======";
         cout<<"\n\n\n\n";
@@ -93,12 +92,9 @@ int main(int argc, char **argv)
                         
                         cout<<"\n\n";
                         
-                        /*std::cout << "Press \'Return\' to end." << std::endl;
-                        fflush(stdin);
-                        char ch;
-                        std::cin.get(ch);*/
-                        
-                        //system("pause");
+                        //code which behaves as getch()
+                        cout<< "Press ENTER to continue...";
+                        cin.ignore().get();
                         
                         break;
                         
@@ -181,9 +177,14 @@ int main(int argc, char **argv)
                                 if(strcmp(e.firstname,xfirstname) != 0)
                                 {
                                     temp.write((char*)&e,sizeof(e));
+                                    flag = 1;
                                 }
                             }
                             
+                            if(flag == 0)
+                            {
+                                cout<<"Record Not Found";
+                            }
                             file.close();
                             temp.close();
                             
@@ -198,18 +199,17 @@ int main(int argc, char **argv)
                         break;
             
             case '5' : 
-            
                         cout<<"\n\n\t\t THANK YOU FOR USING THIS SOFTWARE\n\n";
                         exit(0);
             
             default :
-            
+                        system("clear");
+                        
                         cout<<"\n\n\t\t=== WRONG CHOICE!!! PLEASE TRY AGAIN ===";
-                        sleep(2);
-            
-            
+                        
+                        cout<<"\n\n\n\t\tPress ENTER to continue...";
+                        cin.ignore().get();
         }
-        
     }
 	return 0;
 }

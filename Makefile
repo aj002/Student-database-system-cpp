@@ -1,8 +1,8 @@
 .PHONY: clean All
 
 All:
-	@echo "----------Building project:[ Student_Database_System_CPP - Debug ]----------"
-	@"$(MAKE)" -f  "Student_Database_System_CPP.mk"
+	@echo "----------Building project:[ Hangman_Game - Debug ]----------"
+	@cd "Hangman_Game" && "$(MAKE)" -f  "Hangman_Game.mk"
 clean:
-	@echo "----------Cleaning project:[ Student_Database_System_CPP - Debug ]----------"
-	@"$(MAKE)" -f  "Student_Database_System_CPP.mk" clean
+	@echo "----------Cleaning project:[ Hangman_Game - Debug ]----------"
+	@cd "Hangman_Game" && "$(MAKE)" -f  "Hangman_Game.mk" clean

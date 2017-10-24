@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="Student_Database_System_CPP" Database="">
-  <Project Name="Student_Database_System_CPP" Path="Student_Database_System_CPP.project" Active="Yes"/>
+  <Project Name="Student_Database_System_CPP" Path="Student_Database_System_CPP.project" Active="No"/>
+  <Project Name="Hangman_Game" Path="Hangman_Game/Hangman_Game.project" Active="Yes"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment/>
       <Project Name="Student_Database_System_CPP" ConfigName="Debug"/>
       <Project Name="dfh_binary" ConfigName="Debug"/>
+      <Project Name="Hangman_Game" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
       <Project Name="Student_Database_System_CPP" ConfigName="Release"/>
       <Project Name="dfh_binary" ConfigName="Release"/>
+      <Project Name="Hangman_Game" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
